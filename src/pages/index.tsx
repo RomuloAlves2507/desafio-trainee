@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ReactSpeedometer from "react-d3-speedometer";
 import React from "react";
-import { Chart } from "react-google-charts";
-
+// Adicione a importação do Chart se necessário
+// import { Chart } from 'react-google-charts';
 
 export const data = [
   ["Year", "Sales", "Expenses"],
@@ -27,10 +27,8 @@ const Home = () => {
   const [voltage, setVoltage] = useState<number>(0);
   const [potPosition, setPotPosition] = useState<number>(0);
 
-  //será substituído pelos valores do servidor 
   useEffect(() => {
     const interval = setInterval(() => {
-
       const newTemperature = Math.random() * 50; // Simulando temperatura entre 0 e 50
       const newVoltage = Math.random() * 24; // Simulando tensão entre 0 e 24
       const newPotPosition = Math.random() * 10; // Simulando posição do potenciômetro entre 0 e 10
@@ -51,24 +49,19 @@ const Home = () => {
 
   return (
     <div className="items-center min-h-screen flex flex-col bg-gradient-to-b from-blue-200 to-blue-500">
-
- {/* -------------------------------------------Título e a imagem------------------------------------------- */}
-      
+      {/* -------------------------------------------Título e a imagem------------------------------------------- */}
       <div className='flex'>
         <h1 className="text-8xl font-extrabold text-yellow-500 mb-8 font-serif tracking-wide">Solares</h1>
         <Image src="https://i.pinimg.com/originals/c6/0f/1e/c60f1edd6f1f5be77202a39b1f541a71.png" alt="Logo" width={100} height={100} />
       </div>
 
- {/* ---------------------------------------Escrever os novos valores--------------------------------------- */}
-
+      {/* ---------------------------------------Escrever os novos valores--------------------------------------- */}
       <div className='text-center'>
-        <h2 className="text-2xl font-semibold"> 
-          ÚLTIMOS VALORES RECEBIDOS
-        </h2>
+        <h2 className="text-2xl font-semibold">ÚLTIMOS VALORES RECEBIDOS</h2>
       </div>
 
-      <div> 
-        {/*Temperatura */}
+      <div>
+        {/* Temperatura */}
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg mb-4 w-80 text-center">
           <h2 className="text-2xl font-semibold">Temperatura: {temperature.toFixed(2)} °C</h2>
         </div>
@@ -84,51 +77,37 @@ const Home = () => {
         </div>
       </div>
 
- {/* ------------------------------------------Inserir os gráficos------------------------------------------ */}
-      
+      {/* ------------------------------------------Inserir os gráficos------------------------------------------ */}
       <div className='text-center'>
-        <h2 className="text-2xl font-semibold"> 
-          GRÁFICOS
-        </h2>
+        <h2 className="text-2xl font-semibold">GRÁFICOS</h2>
       </div>
-      
-      <div className='flex'>
-      
-        {/* Tenção */}
 
+      <div className='flex'>
+        {/* Temperatura */}
+        <div>
+          <ReactSpeedometer
+            width={450}
+            height={600}
+            maxValue={145}
+            value={temperature}
+            needleColor="red"
+            startColor="green"
+            segments={10}
+            endColor="red"
+          />
+        </div>
+
+        {/* Gráficos Comentados */}
+        {/*
         <Chart
           chartType="LineChart"
           width="100%"
           height="300px"
           data={data}
           options={options}
-          />
-
-        {/* Temperatura */}
-        <div>
-        <ReactSpeedometer
-          width={450}
-          height={600}
-          maxValue={145}
-          value={temperature}
-          needleColor="red"
-          startColor="green"
-          segments={10}
-          endColor="red"
         />
-        </div>
-
-          {/* Potenciometro */}
-          <Chart
-          chartType="LineChart"
-          width="100%"
-          height="300px"
-          data={data}
-          options={options}
-          />
+        */}
       </div>
-
-
     </div>
   );
 };
